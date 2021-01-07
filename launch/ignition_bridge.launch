@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @TODO Clean up -->
+<launch>
+  <!-- Argument -->
+  <arg name="robot_name"/>
+  <arg name="world_name"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="tf_prefix" default="$(arg robot_name)/"/>
+  <arg name="lidar_sensor_frame" default="3d_lidar"/>
+  <arg name="rgbd_front_frame" default="front_camera"/>
+  <arg name="rgb_back_frame" default="back_camera"/>
+  <arg name="rgb_third_frame" default="third_person_camera"/>
+  <!-- Control command bridge -->
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="control_bridge" output="screen" args="/model/$(arg robot_name)/cmd_vel@geometry_msgs/Twist@ignition.msgs.Twist">
+    <remap from="/model/$(arg robot_name)/cmd_vel" to="/$(arg robot_name)/cmd_vel"/>
+  </node>
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="odometry_bridge" output="screen" args="/model/$(arg robot_name)/odometry@nav_msgs/Odometry[ignition.msgs.Odometry">
+    <remap from="/model/$(arg robot_name)/odometry" to="/$(arg robot_name)/odom/raw"/>
+  </node>
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="joint_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/joint_state@sensor_msgs/JointState[ignition.msgs.Model">
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/joint_state" to="/$(arg robot_name)/joint_states"/>
+  </node>
+  <!-- Sensors -->
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="imu_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/imu/imu@sensor_msgs/Imu[ignition.msgs.IMU">
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/imu/imu" to="/$(arg robot_name)/imu/data"/>
+  </node>
+  <!-- For imu visualize-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_stf" args="0 0 0 0 0 0 $(arg tf_prefix)imu $(arg robot_name)/$(arg base_frame)/imu"/>
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="lidar_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg lidar_sensor_frame)/scan/points@sensor_msgs/PointCloud2[ignition.msgs.PointCloudPacked">
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg lidar_sensor_frame)/scan/points" to="/$(arg robot_name)/points"/>
+  </node>
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="lidar_scan_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg lidar_sensor_frame)/scan@sensor_msgs/LaserScan[ignition.msgs.LaserScan">
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg lidar_sensor_frame)/scan" to="/$(arg robot_name)/scan"/>
+  </node>
+  <!-- For lidar visualize-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_stf" args="0 0 0 0 0 0 $(arg tf_prefix)3d_laser_scanner $(arg robot_name)/$(arg base_frame)/$(arg lidar_sensor_frame)"/>
+  <node pkg="ros_ign_image" type="image_bridge" name="image_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgbd_front_frame)/image /world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_back_frame)/image /world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_third_frame)/image">
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgbd_front_frame)/image" to="/$(arg robot_name)/front_image"/>
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_back_frame)/image" to="/$(arg robot_name)/back_image"/>
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_third_frame)/image" to="/$(arg robot_name)/third_person_image"/>
+  </node>
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="depth_camera_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgbd_front_frame)/points@sensor_msgs/PointCloud2[ignition.msgs.PointCloudPacked">
+    <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgbd_front_frame)/points" to="/$(arg robot_name)/front_points"/>
+  </node>
+  <!-- For depth camera visualize-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="depth_stf" args="0 0 0 0 0 0 $(arg tf_prefix)$(arg rgbd_front_frame) $(arg robot_name)/$(arg base_frame)/$(arg rgbd_front_frame)"/>
+</launch>

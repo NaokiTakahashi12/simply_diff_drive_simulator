@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Argument -->
+  <arg name="no_ign_gui" default="true"/>
+  <arg name="ign_gui_arg" default="" unless="$(arg no_ign_gui)"/>
+  <arg name="ign_gui_arg" default="-s" if="$(arg no_ign_gui)"/>
+  <arg name="model_name" default="diff_bot"/>
+  <arg name="world_name" default="diff_bot"/>
+  <!-- Environment variables for ignitiion gazebo -->
+  <env name="SDF_PATH" value="$(optenv SDF_PATH):$(find simply_diff_drive_simulator)/models"/>
+  <env name="IGN_FILE_PATH" value="$(optenv IGN_FILE_PATH):$(find simply_diff_drive_simulator)/models"/>
+  <env name="IGN_GAZEBO_RESOURCE_PATH" value="$(optenv IGN_GAZEBO_RESOURCE_PATH):$(find simply_diff_drive_simulator)/worlds"/>
+  <!-- Load URDF -->
+  <param name="robot_description" textfile="$(find simply_diff_drive_simulator)/models/simply_diff_drive_robot/simply_diff_drive_robot.urdf"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="100.0"/>
+    <param name="tf_prefix" value="$(arg model_name)"/>
+    <remap from="/joint_states" to="/$(arg model_name)/joint_states"/>
+  </node>
+  <!-- Launch up ignition gazebo -->
+  <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
+    <arg name="ign_args" value="-r -v4 $(arg ign_gui_arg) $(arg world_name).sdf"/>
+  </include>
+</launch>
