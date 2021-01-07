@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Argument -->
+  <arg name="no_ign_gui" default="true"/>
+  <arg name="robot_name" default="diff_bot"/>
+  <!-- Ignition gazebo -->
+  <include file="$(find simply_diff_drive_simulator)/launch/ignition_gazebo.launch">
+    <arg name="no_ign_gui" value="$(arg no_ign_gui)"/>
+  </include>
+  <!-- Ignition ros bridges -->
+  <include file="$(find simply_diff_drive_simulator)/launch/ignition_bridge.launch">
+    <arg name="robot_name" value="$(arg robot_name)"/>
+    <arg name="world_name" value="diff_bot"/>
+  </include>
+  <!-- Linking base_link to odom -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node">
+    <rosparam command="load" file="$(find simply_diff_drive_simulator)/config/ekf_localization.yaml"/>
+    <param name="tf_prefix" value="$(arg robot_name)"/>
+    <param name="map_frame" value="map"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_link_frame" value="base_link"/>
+    <param name="imu0" value="$(arg robot_name)/imu/data"/>
+    <param name="odom0" value="$(arg robot_name)/odom/raw"/>
+    <remap from="/odometry/filtered" to="/$(arg robot_name)/odom/filterd"/>
+    <remap from="/set_pose" to="/$(arg robot_name)/set_pose"/>
+  </node>
+  <!-- Depth points to laser scan -->
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+    <rosparam command="load" file="$(find simply_diff_drive_simulator)/config/pointcloud2_to_scan.yaml"/>
+    <param name="target_frame" value="$(arg robot_name)/front_camera"/>
+    <remap from="cloud_in" to="/$(arg robot_name)/front_points"/>
+    <remap from="scan" to="/$(arg robot_name)/front_scan"/>
+  </node>
+  <!-- Rviz -->
+  <node type="rviz" pkg="rviz" name="diff_bot_rviz" args="-d $(find simply_diff_drive_simulator)/rviz/diff_bot.rviz" respawn="true">
+  </node>
+</launch>
