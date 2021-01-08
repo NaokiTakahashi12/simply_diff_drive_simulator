@@ -1,0 +1,20 @@
+resolution: 0.10
+max_depth: 15
+compress_map: false
+latch: false
+filter_ground: false
+# pointcloud_max_z: 1000
+# Depth camera
+# pointcloud_min_z: 0.0
+# LiDAR
+# pointcloud_min_z: -0.3
+occupancy_min_z: -1000
+occupancy_max_z: 1000
+sensor_model:
+  max_range: 20
+  miss: 0.4
+  hit: 0.9
+ground_filter:
+  distance: 0.1
+  angle: 0.15
+  plane_distance: -0.4
