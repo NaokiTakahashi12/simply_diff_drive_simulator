@@ -37,6 +37,9 @@
   <exec_depend>rviz</exec_depend>
   <exec_depend>gmapping</exec_depend>
   <exec_depend>octomap_server</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>neonavigation_common</exec_depend>
   <!-- Use build_depend for packages you need at compile time: -->
   <!--   <build_depend>message_generation</build_depend> -->
   <!-- Use build_export_depend for packages you need in order to build against this package: -->
