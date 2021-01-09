@@ -1,0 +1,100 @@
+neonavigation_compatible: 1
+costmap_3d:
+  ang_resolution: 16
+  footprint: [[0.25, -0.25], [0.25, 0.25], [-0.25, 0.25], [-0.25, -0.25]]
+  linear_expand: 0.08
+  linear_spread: 0.3
+  static_layers:
+    - name: unknown
+      type: Costmap3dLayerUnknownHandle
+      unknown_cost: 100
+    - name: overlay0
+      type: Costmap3dLayerPlain
+      overlay_mode: max
+      linear_expand: 0.0
+      linear_spread: 0.0
+  layers:
+    - name: stop_propagation
+      type: Costmap3dLayerStopPropagation
+    - name: overlay2
+      type: Costmap3dLayerPlain
+      overlay_mode: max
+      linear_expand: 0.08
+      linear_spread: 0.0
+      keep_unknown: true
+    - name: overlay1
+      type: Costmap3dLayerFootprint
+      overlay_mode: max
+      linear_expand: 0.15
+      linear_spread: 0.3
+      keep_unknown: true
+planner_3d:
+  goal_tolerance_lin: 0.4
+  goal_tolerance_ang: 0.4
+  goal_tolerance_ang_finish: 2
+  unknown_cost: 80
+  hist_cost: 70
+  hist_cnt_max: 20
+  hist_cnt_thres: 19
+  num_threads: 3
+  freq: 5.0
+  freq_min: 2.0
+  local_range: 2.0
+  longcut_range: 0.7
+  esc_range: 0.25
+  find_best: true
+  remember_updates: true
+  hist_ignore_range: 0.0
+  hist_ignore_range_max: 1.5
+  fast_map_update: true
+  force_goal_orientation: false
+  pos_jump: 1.5
+  yaw_jump: 0.4
+  jump_detect_frame: base_link
+  temporary_escape: false
+  queue_size_limit: 0
+  antialias_start: true
+  search_range: 1
+  costmap_watchdog: 0.0
+  max_vel: 1
+  max_ang_vel: 1
+  min_curve_radius: 1.0
+  overwrite_cost: false
+  remember_hit_prob: 0.6
+  remember_miss_prob: 0.3
+  sw_wait: 0.0
+  robot_frame: base_link
+  map_frame: map
+trajectory_tracker:
+  hz: 20.0
+  k_dist: 16.0
+  k_ang: 10.0
+  k_avel: 4.0
+  dist_lim: 0.5
+  rotate_ang: 0.3
+  goal_tolerance_dist: 0.1
+  goal_tolerance_ang: 0.05
+  stop_tolerance_dist: 0.01
+  stop_tolerance_ang: 0.01
+  no_position_control_dist: 0.02
+  limit_vel_by_avel: false
+  path_step: 10
+  look_forward: 1.0
+  curv_forward: 0.5
+  framme_robot: base_link
+safety_limiter:
+  footprint: [[0.25, -0.25], [0.25, 0.25], [-0.25, 0.25], [-0.25, -0.25]]
+  cloud_timeout: 0.8
+  allow_empty_cloud: true
+  watchdog_interval: 0.0
+  frame_id: base_link
+pointcloud2_to_map:
+  z_max: 0.9
+  z_min: 0.0
+  width: 120
+  hz: 2.5
+largemap_to_map:
+  width: 120
+  hz: 2.5
+  round_local_map: false
+  simulate_occlusion: true
