@@ -3,6 +3,7 @@
   <!-- Argument -->
   <arg name="no_ign_gui" default="true"/>
   <arg name="robot_name" default="diff_bot"/>
+  <arg name="with_navigation" default="false"/>
   <!-- Ignition gazebo -->
   <include file="$(find simply_diff_drive_simulator)/launch/ignition_gazebo.launch">
     <arg name="no_ign_gui" value="$(arg no_ign_gui)"/>
@@ -34,4 +35,10 @@
   <!-- Rviz -->
   <node type="rviz" pkg="rviz" name="diff_bot_rviz" args="-d $(find simply_diff_drive_simulator)/rviz/diff_bot.rviz" respawn="true">
   </node>
+  <!-- Navigation -->
+  <group if="$(arg with_navigation)">
+    <include file="$(find simply_diff_drive_simulator)/launch/run_navigation.launch">
+      <arg name="robot_name" value="$(arg robot_name)"/>
+    </include>
+  </group>
 </launch>
