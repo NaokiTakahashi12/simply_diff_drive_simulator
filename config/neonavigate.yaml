@@ -50,7 +50,6 @@ planner_3d:
   force_goal_orientation: false
   pos_jump: 1.5
   yaw_jump: 0.4
-  jump_detect_frame: base_link
   temporary_escape: false
   queue_size_limit: 0
   antialias_start: true
@@ -63,8 +62,6 @@ planner_3d:
   remember_hit_prob: 0.6
   remember_miss_prob: 0.3
   sw_wait: 0.0
-  robot_frame: base_link
-  map_frame: map
 trajectory_tracker:
   hz: 20.0
   k_dist: 16.0
@@ -81,13 +78,11 @@ trajectory_tracker:
   path_step: 10
   look_forward: 1.0
   curv_forward: 0.5
-  framme_robot: base_link
 safety_limiter:
   footprint: [[0.25, -0.25], [0.25, 0.25], [-0.25, 0.25], [-0.25, -0.25]]
   cloud_timeout: 0.8
   allow_empty_cloud: true
   watchdog_interval: 0.0
-  frame_id: base_link
 pointcloud2_to_map:
   z_max: 0.9
   z_min: 0.0
