@@ -1,0 +1,66 @@
+version: '2.4'
+
+services:
+  xwindow:
+    image: busybox
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/root/.Xauthority:rw
+      - /tmp/.docker.$USER.xauth:/tmp/.docker.xauth:ro
+  roscore:
+    image: naokitakahashi12/simply-diff-drive-simulator:ros-melodic
+    networks:
+      - rosbridge
+    environment:
+      - ROS_HOSTNAME=roscore
+      - ROS_MASTER_URI=http://roscore:11311
+    command: >
+      stdbuf -o L
+      roscore
+  ros-console:
+    image: naokitakahashi12/simply-diff-drive-simulator:ros-melodic
+    tty: true
+    environment:
+      - ROS_HOSTNAME=ros-console
+      - ROS_MASTER_URI=http://roscore:11311
+    networks:
+      - rosbridge
+    volumes_from:
+      - xwindow
+    volumes:
+      - ign-fuel:/root/.ignition
+      - ./shared_volume:/shared_volume:rw
+    devices:
+      - /dev/dri # For intel graphics device
+    env_file:
+      - ./env_files/xwindow.env
+  ros-simulator:
+    image: naokitakahashi12/simply-diff-drive-simulator:ros-melodic
+    depends_on:
+      - roscore
+    environment:
+      - ROS_HOSTNAME=ros-simulator
+      - ROS_MASTER_URI=http://roscore:11311
+    networks:
+      - rosbridge
+    volumes_from:
+      - xwindow
+    volumes:
+      - ign-fuel:/root/.ignition
+    devices:
+      - /dev/dri # For intel graphics device
+    env_file:
+      - ./env_files/xwindow.env
+    command: >
+      stdbuf -o L
+        roslaunch
+          simply_diff_drive_simulator
+          run_simulation.launch
+            with_navigation:=true
+networks:
+  rosbridge:
+    driver: bridge
+
+volumes:
+  ign-fuel:
+
