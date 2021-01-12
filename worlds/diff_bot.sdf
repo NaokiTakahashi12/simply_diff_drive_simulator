@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
   <world name="diff_bot">
-    <physics name="10ms" type="ignored">
-      <max_step_size>0.0100</max_step_size>
+    <physics name="2.5ms" type="ignored">
+      <max_step_size>2.5e-3</max_step_size>
       <real_time_factor>1</real_time_factor>
     </physics>
     <scene>
@@ -168,12 +168,6 @@
         </ignition-gui>
         <topic_picker>false</topic_picker>
         <topic>/world/diff_bot/model/bot/link/base_link/sensor/third_person_camera/image</topic>
-      </plugin>
-      <!-- LiDAR visualize -->
-      <plugin filename="VisualizeLidar" name="Visualize Lidar">
-        <ignition-gui>
-          <property key="state" type="string">docked</property>
-        </ignition-gui>
       </plugin>
       <!-- Key publisher -->
       <plugin filename="KeyPublisher" name="Key Publisher">
