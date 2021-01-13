@@ -6,7 +6,7 @@
   <arg name="world_name"/>
   <arg name="base_frame" default="base_link"/>
   <arg name="tf_prefix" default="$(arg robot_name)/"/>
-  <arg name="lidar_sensor_frame" default="3d_lidar"/>
+  <arg name="lidar_sensor_frame" default="lidar"/>
   <arg name="rgbd_front_frame" default="front_camera"/>
   <arg name="rgb_back_frame" default="back_camera"/>
   <arg name="rgb_third_frame" default="third_person_camera"/>
@@ -33,7 +33,7 @@
     <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg lidar_sensor_frame)/scan" to="/$(arg robot_name)/scan"/>
   </node>
   <!-- For lidar visualize-->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_stf" args="0 0 0 0 0 0 $(arg tf_prefix)3d_laser_scanner $(arg robot_name)/$(arg base_frame)/$(arg lidar_sensor_frame)"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_stf" args="0 0 0 0 0 0 $(arg tf_prefix)lidar $(arg robot_name)/$(arg base_frame)/$(arg lidar_sensor_frame)"/>
   <node pkg="ros_ign_image" type="image_bridge" name="image_bridge" output="screen" args="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgbd_front_frame)/image /world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_back_frame)/image /world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_third_frame)/image">
     <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgbd_front_frame)/image" to="/$(arg robot_name)/front_image"/>
     <remap from="/world/$(arg world_name)/model/$(arg robot_name)/link/$(arg base_frame)/sensor/$(arg rgb_back_frame)/image" to="/$(arg robot_name)/back_image"/>

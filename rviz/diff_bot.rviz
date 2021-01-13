@@ -58,17 +58,15 @@ Visualization Manager:
       Frame Timeout: 5
       Frames:
         All Enabled: true
-        diff_bot/3d_laser_scanner:
-          Value: true
         diff_bot/back_camera:
           Value: true
         diff_bot/base_link:
           Value: true
-        diff_bot/base_link/3d_lidar:
-          Value: true
         diff_bot/base_link/front_camera:
           Value: true
         diff_bot/base_link/imu:
+          Value: true
+        diff_bot/base_link/lidar:
           Value: true
         diff_bot/body:
           Value: true
@@ -81,6 +79,8 @@ Visualization Manager:
         diff_bot/imu:
           Value: true
         diff_bot/left_wheel:
+          Value: true
+        diff_bot/lidar:
           Value: true
         diff_bot/odom:
           Value: true
@@ -96,30 +96,31 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          diff_bot/odom:
-            diff_bot/base_link:
-              diff_bot/body:
-                diff_bot/3d_laser_scanner:
-                  diff_bot/base_link/3d_lidar:
-                    {}
-                diff_bot/back_camera:
-                  {}
-                diff_bot/front_camera:
-                  diff_bot/base_link/front_camera:
-                    {}
-                diff_bot/front_free_wheel_base:
-                  diff_bot/front_free_wheel:
-                    {}
-                diff_bot/imu:
-                  diff_bot/base_link/imu:
-                    {}
-                diff_bot/left_wheel:
-                  {}
-                diff_bot/right_wheel:
-                  {}
-              diff_bot/third_person_camera:
+        diff_bot/odom:
+          diff_bot/base_link:
+            diff_bot/body:
+              diff_bot/back_camera:
                 {}
+              diff_bot/front_camera:
+                diff_bot/base_link/front_camera:
+                  {}
+              diff_bot/front_free_wheel_base:
+                diff_bot/front_free_wheel:
+                  {}
+              diff_bot/imu:
+                diff_bot/base_link/imu:
+                  {}
+              diff_bot/left_wheel:
+                {}
+              diff_bot/lidar:
+                diff_bot/base_link/lidar:
+                  {}
+              diff_bot/right_wheel:
+                {}
+            diff_bot/third_person_camera:
+              {}
+        map:
+          {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
@@ -127,11 +128,6 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
-        3d_laser_scanner:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
@@ -172,6 +168,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false

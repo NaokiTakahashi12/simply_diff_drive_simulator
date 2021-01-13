@@ -133,7 +133,7 @@
       </material>
     </visual>
   </link>
-  <link name="3d_laser_scanner">
+  <link name="lidar">
     <inertial>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
       <mass value="0.3"/>
@@ -249,7 +249,7 @@
   <joint name="3d_laser_scanner_joint" type="fixed">
     <origin xyz="0.2 0.0 0.3" rpy="0.0 0.0 0.0"/>
     <parent link="body"/>
-    <child link="3d_laser_scanner"/>
+    <child link="lidar"/>
   </joint>
   <joint name="front_camera_joint" type="fixed">
     <origin xyz="0.25 0.0 0.2" rpy="0.0 0.0 0.0"/>
@@ -315,8 +315,8 @@
       </imu>
     </sensor>
   </gazebo>
-  <gazebo reference="3d_laser_scanner">
-    <sensor name="3d_lidar" type="gpu_lidar">
+  <gazebo reference="lidar">
+    <sensor name="lidar" type="gpu_lidar">
       <alwaysOn>1</alwaysOn>
       <update_rate>10</update_rate>
       <visualize>false</visualize>
