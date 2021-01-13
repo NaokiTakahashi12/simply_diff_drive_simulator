@@ -1,0 +1,11 @@
+initial_pose_x: 0.0
+initial_pose_y: 0.0
+initial_pose_a: 0.0
+update_min_d: 0.025
+update_min_a: 0.1745
+min_particles: 100
+max_particles: 1000
+laser_model_type: likelihood_field_prob
+odom_model_type: diff-corrected
+use_map_topic: false
+selective_resampling: true

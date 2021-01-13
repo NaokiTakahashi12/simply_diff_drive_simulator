@@ -1,0 +1,13 @@
+map_update_interval: 0.25
+linearUpdate: 0.2
+angularUpdate: 0.2
+temporalUpdate: 0.75
+maxUrange: 3.0
+maxRange: 30.0
+xmin: -20.0
+ymin: -20.0
+xmax: 20.0
+ymax: 20.0
+delta: 0.05
+particles: 100
+minimumScore: 50

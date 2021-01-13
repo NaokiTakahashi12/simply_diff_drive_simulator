@@ -1,0 +1,25 @@
+repositories:
+  simply_diff_drive_simulator:
+    type: git
+    url: https://github.com/NaokiTakahashi12/simply_diff_drive_simulator.git
+    version: develop
+  ros_ign:
+    type: git
+    url: https://github.com/ignitionrobotics/ros_ign.git
+    version: melodic
+  robot_localization:
+    type: git
+    url: https://github.com/cra-ros-pkg/robot_localization.git
+    version: melodic-devel
+  neonavigation:
+    type: git
+    url: https://github.com/at-wat/neonavigation.git
+    version: master
+  neonavigation_msgs:
+    type: git
+    url: https://github.com/at-wat/neonavigation_msgs.git
+    version: master
+  neonavigation_rviz_plugins:
+    type: git
+    url: https://github.com/at-wat/neonavigation_rviz_plugins.git
+    version: master

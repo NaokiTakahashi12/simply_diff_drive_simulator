@@ -1,0 +1,18 @@
+publish_acceleration: false
+print_diagnostics: true
+two_d_mode: true
+publish_tf: true
+transform_time_offset: 0
+transform_timeout: 0
+sensor_timeout: 0.5
+frequency: 30
+imu0_config: [false, false, false,
+              false, false, true,
+              false, false, false,
+              false, false, true,
+              false, false, false]
+odom0_config: [false, false, false,
+               false, false, false,
+               true , false, false,
+               false, false, true,
+               false, false, false]

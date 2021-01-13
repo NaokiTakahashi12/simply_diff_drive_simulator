@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Argumanet -->
+  <arg name="robot_name" default="diff_bot"/>
+  <arg name="max_points_z" default="1000"/>
+  <arg name="min_points_z" default="0.0"/>
+  <arg name="disable_stf" default="false"/>
+  <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" output="screen">
+    <param name="pointcloud_max_z" value="$(arg max_points_z)"/>
+    <param name="pointcloud_min_z" value="$(arg min_points_z)"/>
+    <rosparam command="load" file="$(find simply_diff_drive_simulator)/config/octomapping.yaml"/>
+    <param name="frame_id" value="map"/>
+    <param name="base_frame_id" value="$(arg robot_name)/base_link"/>
+    <remap from="cloud_in" to="/$(arg robot_name)/points"/>
+  </node>
+  <group unless="$(arg disable_stf)">
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map_odom_stf" args="0 0 0 0 0 0 $(arg robot_name)/odom map"/>
+  </group>
+</launch>
