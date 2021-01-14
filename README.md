@@ -47,6 +47,7 @@ The following environment is recommended.
 + Ignition gazebo citadel
 
 ```Shell
+export IGNITION_VERSION=citadel
 mkdir -p sim_ws/src
 cd sim_ws/src
 git clone https://github.com/ignitionrobotics/ros_ign.git -b melodic
