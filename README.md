@@ -22,6 +22,9 @@ terminal 2: octomap_mapping
 roslaunch simply_diff_drive_simulator octomapping.launch disable_stf:=true
 ```
 
+Mark checkbox, if you want to visualize `octomap`.
+![octomap image](/image/octomap_select.png)
+
 ### Simulation only
 
 ```Shell
