@@ -22,6 +22,9 @@ terminal 2: octomap_mapping
 roslaunch simply_diff_drive_simulator octomapping.launch disable_stf:=true
 ```
 
+Mark checkbox, if you want to visualize `octomap`.  
+![octomap image](/image/octomap_select.png)
+
 ### Simulation only
 
 ```Shell
@@ -44,6 +47,7 @@ The following environment is recommended.
 + Ignition gazebo citadel
 
 ```Shell
+export IGNITION_VERSION=citadel
 mkdir -p sim_ws/src
 cd sim_ws/src
 git clone https://github.com/ignitionrobotics/ros_ign.git -b melodic
