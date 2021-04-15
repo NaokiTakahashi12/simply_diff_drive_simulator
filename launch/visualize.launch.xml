@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="rviz_default" default="false"/>
+  <arg name="rviz_config" default="$(find-pkg-share simply_diff_drive_simulator)/rviz/diff_bot.rviz"/>
+  <group unless="$(var rviz_default)">
+    <node pkg="rviz2" exec="rviz2" respawn="true" args="-d $(var rviz_config)">
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+      <remap from="move_base_simple/goal" to="goal_pose"/>
+    </node>
+  </group>
+  <group if="$(var rviz_default)">
+    <node pkg="rviz2" exec="rviz2" respawn="true">
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+      <remap from="move_base_simple/goal" to="goal_pose"/>
+    </node>
+  </group>
+</launch>
