@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="diff_bot">
+    <physics name="2.5ms" type="ignored">
+      <max_step_size>2.5e-3</max_step_size>
+      <real_time_factor>1</real_time_factor>
+    </physics>
+    <scene>
+      <ambient>0.2 0.2 0.2 1</ambient>
+      <background>0.8 0.8 0.8 1</background>
+      <grid>true</grid>
+      <shadows>true</shadows>
+    </scene>
+    <plugin filename="libignition-gazebo-physics-system.so" name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="libignition-gazebo-sensors-system.so" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="libignition-gazebo-user-commands-system.so" name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="libignition-gazebo-scene-broadcaster-system.so" name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="ignition-gazebo-contact-system" name="ignition::gazebo::systems::Contact"/>
+    <plugin filename="libignition-gazebo-imu-system.so" name="ignition::gazebo::systems::Imu"/>
+    <plugin filename="ignition-gazebo-magnetometer-system" name="ignition::gazebo::systems::Magnetometer"/>
+    <!-- Command velocity forward -->
+    <plugin filename="libignition-gazebo-triggered-publisher-system.so" name="ignition::gazebo::systems::TriggeredPublisher">
+      <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
+        <match field="data">87</match>
+      </input>
+      <output type="ignition.msgs.Twist" topic="/model/diff_bot/cmd_vel">
+        linear: {x: 0.5}
+      </output>
+    </plugin>
+    <!-- Command velocity backward -->
+    <plugin filename="libignition-gazebo-triggered-publisher-system.so" name="ignition::gazebo::systems::TriggeredPublisher">
+      <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
+        <match field="data">83</match>
+      </input>
+      <output type="ignition.msgs.Twist" topic="/model/diff_bot/cmd_vel">
+        linear: {x: -0.3}
+      </output>
+    </plugin>
+    <!-- Command velocity left -->
+    <plugin filename="libignition-gazebo-triggered-publisher-system.so" name="ignition::gazebo::systems::TriggeredPublisher">
+      <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
+        <match field="data">65</match>
+      </input>
+      <output type="ignition.msgs.Twist" topic="/model/diff_bot/cmd_vel">
+        angular: {z: 0.8}
+      </output>
+    </plugin>
+    <!-- Command velocity right -->
+    <plugin filename="libignition-gazebo-triggered-publisher-system.so" name="ignition::gazebo::systems::TriggeredPublisher">
+      <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
+        <match field="data">68</match>
+      </input>
+      <output type="ignition.msgs.Twist" topic="/model/diff_bot/cmd_vel">
+        angular: {z: -0.8}
+      </output>
+    </plugin>
+    <!-- Command velocity stop -->
+    <plugin filename="libignition-gazebo-triggered-publisher-system.so" name="ignition::gazebo::systems::TriggeredPublisher">
+      <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
+        <match field="data">82</match>
+      </input>
+      <output type="ignition.msgs.Twist" topic="/model/diff_bot/cmd_vel">
+        linear: {x: 0.0}, angular: {z: 0.0}
+      </output>
+    </plugin>
+    <gui fullscreen="0">
+      <!-- 3D scene -->
+      <plugin filename="GzScene3D" name="3D View">
+        <ignition-gui>
+          <title>3D View</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="string" key="state">docked</property>
+        </ignition-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <ambient_light>0.7 0.7 0.7</ambient_light>
+        <background_color>0.8 0.8 0.8</background_color>
+        <camera_pose>1 1 1 0 0.5 3.92</camera_pose>
+      </plugin>
+      <!-- World control -->
+      <plugin filename="WorldControl" name="World control">
+        <ignition-gui>
+          <title>World control</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="bool" key="resizable">false</property>
+          <property type="double" key="height">72</property>
+          <property type="double" key="width">121</property>
+          <property type="double" key="z">1</property>
+          <property type="string" key="state">floating</property>
+          <anchors target="3D View">
+            <line own="left" target="left"/>
+            <line own="bottom" target="bottom"/>
+          </anchors>
+        </ignition-gui>
+        <play_pause>true</play_pause>
+        <step>true</step>
+        <start_paused>true</start_paused>
+        <service>/world/diff_bot/control</service>
+        <stats_topic>/world/diff_bot/stats</stats_topic>
+      </plugin>
+      <!-- World statistics -->
+      <plugin filename="WorldStats" name="World stats">
+        <ignition-gui>
+          <title>World stats</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="bool" key="resizable">false</property>
+          <property type="double" key="height">110</property>
+          <property type="double" key="width">290</property>
+          <property type="double" key="z">1</property>
+          <property type="string" key="state">floating</property>
+          <anchors target="3D View">
+            <line own="right" target="right"/>
+            <line own="bottom" target="bottom"/>
+          </anchors>
+        </ignition-gui>
+        <sim_time>true</sim_time>
+        <real_time>true</real_time>
+        <real_time_factor>true</real_time_factor>
+        <iterations>true</iterations>
+      </plugin>
+      <!-- Image display -->
+      <plugin filename="ImageDisplay" name="FrontRGBDImage">
+        <ignition-gui>
+          <title>RGBD: image front</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">280</property>
+          <property type="double" key="height">300</property>
+          <property type="double" key="x">0</property>
+          <property type="double" key="y">0</property>
+        </ignition-gui>
+        <topic_picker>false</topic_picker>
+        <topic>/world/diff_bot/model/bot/link/base_link/sensor/front_camera/image</topic>
+      </plugin>
+      <plugin filename="ImageDisplay" name="FrontRGBDDepth">
+        <ignition-gui>
+          <title>RGBD: depth front</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">280</property>
+          <property type="double" key="height">300</property>
+          <property type="double" key="x">0</property>
+          <property type="double" key="y">250</property>
+        </ignition-gui>
+        <topic_picker>false</topic_picker>
+        <topic>/world/diff_bot/model/bot/link/base_link/sensor/front_camera/depth_image</topic>
+      </plugin>
+      <plugin filename="ImageDisplay" name="BackRGBDImage">
+        <ignition-gui>
+          <title>RGB: image back</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">280</property>
+          <property type="double" key="height">300</property>
+          <property type="double" key="x">275</property>
+          <property type="double" key="y">0</property>
+        </ignition-gui>
+        <topic_picker>false</topic_picker>
+        <topic>/world/diff_bot/model/bot/link/base_link/sensor/back_camera/image</topic>
+      </plugin>
+      <plugin filename="ImageDisplay" name="ThirdRGBDImage">
+        <ignition-gui>
+          <title>RGB: Third person</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">280</property>
+          <property type="double" key="height">300</property>
+          <property type="double" key="x">0</property>
+          <property type="double" key="y">600</property>
+        </ignition-gui>
+        <topic_picker>false</topic_picker>
+        <topic>/world/diff_bot/model/bot/link/base_link/sensor/third_person_camera/image</topic>
+      </plugin>
+      <!-- Key publisher -->
+      <plugin filename="KeyPublisher" name="Key Publisher">
+        <ignition-gui>
+          <title>Key publisher</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="bool" key="resizable">false</property>
+          <property type="string" key="state">floating</property>
+        </ignition-gui>
+      </plugin>
+    </gui>
+    <light type="directional" name="sun">
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.01</linear>
+        <constant>0.9</constant>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <cast_shadows>true</cast_shadows>
+    </light>
+    <include>
+      <pose>0 0 0 0 0 1.57</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Playground</uri>
+    </include>
+    <include>
+      <name>oak_1</name>
+      <pose>10 10 0 0 0 1.57</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Oak tree</uri>
+    </include>
+    <include>
+      <name>oak_2</name>
+      <pose>10 -10 0 0 0 0.57</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Oak tree</uri>
+    </include>
+    <include>
+      <pose>-10 -5 0 0 0 0.57</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Pine Tree</uri>
+    </include>
+    <include>
+      <pose>-5 20 0 0 0 -3</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Collapsed House</uri>
+    </include>
+    <include>
+      <pose>-20 0 0 0 0 -1.14</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/athackst/models/bicycle</uri>
+    </include>
+    <actor name="actor_talking_1">
+      <animation name="talking">
+        <filename>https://fuel.ignitionrobotics.org/1.0/Mingfei/models/actor/tip/files/meshes/talk_b.dae</filename>
+        <scale>0.055</scale>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <skin>
+        <filename>https://fuel.ignitionrobotics.org/1.0/Mingfei/models/actor/tip/files/meshes/talk_b.dae</filename>
+        <scale>1.0</scale>
+      </skin>
+      <script>
+        <loop>true</loop>
+        <auto_start>true</auto_start>
+        <trajectory id="0" type="talk_b">
+          <waypoint>
+            <time>0</time>
+            <pose>4 -4 1 0 0 0</pose>
+          </waypoint>
+          <waypoint>
+            <time>30</time>
+            <pose>4.2 -4 1 0 0 0</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+    <actor name="actor_talking_2">
+      <animation name="talking">
+        <filename>https://fuel.ignitionrobotics.org/1.0/Mingfei/models/actor/tip/files/meshes/talk_a.dae</filename>
+        <scale>0.055</scale>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <skin>
+        <filename>https://fuel.ignitionrobotics.org/1.0/Mingfei/models/actor/tip/files/meshes/talk_a.dae</filename>
+        <scale>1.0</scale>
+      </skin>
+      <script>
+        <loop>true</loop>
+        <auto_start>true</auto_start>
+        <trajectory id="0" type="talk_a">
+          <waypoint>
+            <time>0</time>
+            <pose>4 -5.5 1 0 0 0</pose>
+          </waypoint>
+          <waypoint>
+            <time>30</time>
+            <pose>4 -5.7 1 0 0 0</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+    <include>
+      <uri>ground_plane</uri>
+    </include>
+  </world>
+</sdf>
