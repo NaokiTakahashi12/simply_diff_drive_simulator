@@ -6,7 +6,7 @@ repositories:
   ros_ign:
     type: git
     url: https://github.com/ignitionrobotics/ros_ign.git
-    version: melodic
+    version: 0.9.4
   robot_localization:
     type: git
     url: https://github.com/cra-ros-pkg/robot_localization.git
