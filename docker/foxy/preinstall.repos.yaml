@@ -1,0 +1,48 @@
+repositories:
+  simply_diff_drive_simulator:
+    type: git
+    url: https://github.com/NaokiTakahashi12/simply_diff_drive_simulator.git
+    version: foxy
+  ros_ign:
+    type: git
+    url: https://github.com/ignitionrobotics/ros_ign.git
+    version: ros2
+  joint_state_publisher:
+    type: git
+    url: https://github.com/ros/joint_state_publisher.git
+    version: foxy
+  robot_localization:
+    type: git
+    url: https://github.com/cra-ros-pkg/robot_localization.git
+    version: main
+    version: foxy-devel
+  visualization_tutorials:
+    type: git
+    url: https://github.com/ros-visualization/visualization_tutorials.git
+    version: main
+    version: ros2
+  costmap_converter:
+    type: git
+    url: https://github.com/rst-tu-dortmund/costmap_converter.git
+    version: ros2
+  teb_local_planner:
+    type: git
+    url: https://github.com/rst-tu-dortmund/teb_local_planner.git
+    version: foxy-devel
+  slam_toolbox:
+    type: git
+    url: https://github.com/SteveMacenski/slam_toolbox.git
+    version: foxy-devel
+  diagnostics:
+    type: git
+    url: https://github.com/ros/diagnostics.git
+    version: foxy
+  rviz:
+    type: git
+    url: https://github.com/ros2/rviz.git
+    version: foxy
+  navigation2:
+    type: git
+    url: https://github.com/ros-planning/navigation2.git
+    version: foxy-devel
+
