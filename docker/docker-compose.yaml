@@ -1,0 +1,55 @@
+version: '2.4'
+
+services:
+  xwindow:
+    image: busybox
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/root/.Xauthority:rw
+      - /tmp/.docker.$USER.xauth:/tmp/.docker.xauth:ro
+  ros2-console:
+    image: naokitakahashi12/simply-diff-drive-simulator:ros2-foxy
+    tty: true
+    runtime: nvidia
+    environment:
+      - ROS_DOMAIN_ID=121
+    networks:
+      - rosbridge
+    volumes_from:
+      - xwindow
+    volumes:
+      - ign-fuel:/root/.ignition
+      - ./shared_volume:/shared_volume:rw
+    devices:
+      - /dev/dri # For intel graphics device
+    env_file:
+      - ./env_files/xwindow.env
+  ros2-simulator:
+    image: naokitakahashi12/simply-diff-drive-simulator:ros2-foxy
+    runtime: nvidia
+    environment:
+      - ROS_DOMAIN_ID=121
+    networks:
+      - rosbridge
+    volumes_from:
+      - xwindow
+    volumes:
+      - ign-fuel:/root/.ignition
+    devices:
+      - /dev/dri # For intel graphics device
+    env_file:
+      - ./env_files/xwindow.env
+    command: >
+      stdbuf -o L
+        ros2 launch
+          simply_diff_drive_simulator
+          run_simulation.launch.py
+            with_navigation:=true
+
+networks:
+  rosbridge:
+    driver: bridge
+
+volumes:
+  ign-fuel:
+
