@@ -54,7 +54,7 @@ bt_navigator:
     use_sim_time: true
     global_frame: map
     robot_base_frame: diff_bot/base_link
-    odom_topic: /diff_bot/odom
+    odom_topic: /diff_bot/odom/filtered
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
