@@ -206,20 +206,20 @@
       </plugin>
       <plugin filename="libignition-gazebo-wheel-slip-system.so" name="ignition::gazebo::systems::WheelSlip">
         <wheel link_name="front_free_wheel">
-          <slip_compliance_lateral>1</slip_compliance_lateral>
-          <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+          <slip_compliance_lateral>0.1</slip_compliance_lateral>
+          <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
           <wheel_normal_force>19</wheel_normal_force>
           <wheel_radius>0.04</wheel_radius>
         </wheel>
         <wheel link_name="left_wheel">
-          <slip_compliance_lateral>1</slip_compliance_lateral>
-          <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+          <slip_compliance_lateral>0.1</slip_compliance_lateral>
+          <slip_compliance_longitudinal>0.2</slip_compliance_longitudinal>
           <wheel_normal_force>29</wheel_normal_force>
           <wheel_radius>0.15</wheel_radius>
         </wheel>
         <wheel link_name="right_wheel">
-          <slip_compliance_lateral>1</slip_compliance_lateral>
-          <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+          <slip_compliance_lateral>0.1</slip_compliance_lateral>
+          <slip_compliance_longitudinal>0.2</slip_compliance_longitudinal>
           <wheel_normal_force>29</wheel_normal_force>
           <wheel_radius>0.15</wheel_radius>
         </wheel>

@@ -216,7 +216,7 @@
     <parent link="body"/>
     <child link="left_wheel"/>
     <axis xyz="0.0 0.0 -1.0"/>
-    <limit lower="-1e16" upper="1e16" effort="0.5" velocity="8"/>
+    <limit lower="-1e16" upper="1e16" effort="3.5" velocity="8"/>
     <dynamics damping="0.1"/>
   </joint>
   <joint name="right_motor_joint" type="revolute">
@@ -224,7 +224,7 @@
     <parent link="body"/>
     <child link="right_wheel"/>
     <axis xyz="0.0 0.0 -1.0"/>
-    <limit lower="-1e16" upper="1e16" effort="0.5" velocity="8"/>
+    <limit lower="-1e16" upper="1e16" effort="3.5" velocity="8"/>
     <dynamics damping="0.1"/>
   </joint>
   <joint name="front_free_wheel_base_joint" type="revolute">
@@ -232,14 +232,14 @@
     <parent link="body"/>
     <child link="front_free_wheel_base"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit lower="-1e16" upper="1e16" effort="0" velocity="0"/>
+    <limit lower="-1e16" upper="1e16" effort="0" velocity="16"/>
   </joint>
   <joint name="front_free_wheel_joint" type="revolute">
     <origin xyz="0.02 0.0 -0.06" rpy="1.5708 0.0 0.0"/>
     <parent link="front_free_wheel_base"/>
     <child link="front_free_wheel"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit lower="-1e16" upper="1e16" effort="0" velocity="0"/>
+    <limit lower="-1e16" upper="1e16" effort="0" velocity="16"/>
   </joint>
   <joint name="imu_joint" type="fixed">
     <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
