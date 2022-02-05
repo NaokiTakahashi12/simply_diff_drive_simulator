@@ -44,4 +44,7 @@
   </node>
   <!-- For depth camera visualize-->
   <node pkg="tf2_ros" type="static_transform_publisher" name="depth_stf" args="0 0 0 0 0 0 $(arg tf_prefix)$(arg rgbd_front_frame) $(arg robot_name)/$(arg base_frame)/$(arg rgbd_front_frame)"/>
+  <!-- Simulation time -->
+  <node pkg="ros_ign_bridge" type="parameter_bridge" name="clock_bridge" output="screen" args="/clock@rosgraph_msgs/Clock[ignition.msgs.Clock">
+  </node>
 </launch>
