@@ -32,8 +32,6 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package()
-
 install(
   DIRECTORY
     launch
@@ -44,6 +42,7 @@ install(
     maps
     rviz
   DESTINATION
-    share/${PROJECT_NAME}
+    "share/${PROJECT_NAME}"
 )
-
+ament_environment_hooks(hooks/simply_diff_drive_simulator.dsv.in)
+ament_package()
