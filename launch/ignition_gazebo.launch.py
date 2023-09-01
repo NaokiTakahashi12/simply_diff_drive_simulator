@@ -63,18 +63,18 @@ def generate_launch_description():
             description = 'Disable ignition gazebo gui (true/false)'
         ),
         DeclareLaunchArgument('ign_world_args',
-            default_value = ['-r -v1 diff_bot.sdf'],
+            default_value = ['-r diff_bot.sdf'],
             description = 'Ignition gazebo argments (string)',
             condition = UnlessCondition(LaunchConfiguration('no_ign_gui'))
         ),
         DeclareLaunchArgument('ign_world_args',
-            default_value = ['-s -v1 -r diff_bot.sdf'],
+            default_value = ['-s -r diff_bot.sdf'],
             description = 'Ignition gazebo argments (string)',
             condition = IfCondition(LaunchConfiguration('no_ign_gui'))
         ),
         DeclareLaunchArgument('with_bridge',
             default_value = ['true'],
-            description = 'Launch with ros_ign_briges (true/false)'
+            description = 'Launch with ros_gz_briges (true/false)'
         ),
         GroupAction([
             Node(
@@ -93,9 +93,9 @@ def generate_launch_description():
             IncludeLaunchDescription(
                 AnyLaunchDescriptionSource([
                     os.path.join(
-                        get_package_share_directory('ros_ign_gazebo'),
+                        get_package_share_directory('ros_gz_sim'),
                         'launch',
-                        'ign_gazebo.launch.py'
+                        'gz_sim.launch.py'
                     )
                 ]),
                 launch_arguments = {
@@ -103,7 +103,7 @@ def generate_launch_description():
                 }.items()
             ),
             Node(
-                package = 'ros_ign_gazebo',
+                package = 'ros_gz_sim',
                 executable = 'create',
                 name = 'robot_spawner',
                 namespace = namespace,

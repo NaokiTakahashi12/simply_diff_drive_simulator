@@ -55,7 +55,7 @@ bt_navigator:
     global_frame: map
     robot_base_frame: diff_bot/base_link
     odom_topic: /diff_bot/odom/filtered
-    default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
+    default_bt_xml_filename: "navigate_through_poses_w_replanning_and_recovery.xml"
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
     - nav2_follow_path_action_bt_node
@@ -79,6 +79,8 @@ bt_navigator:
     - nav2_transform_available_condition_bt_node
     - nav2_time_expired_condition_bt_node
     - nav2_distance_traveled_condition_bt_node
+    - nav2_remove_passed_goals_action_bt_node
+    - nav2_compute_path_through_poses_action_bt_node
 
 bt_navigator_rclcpp_node:
   ros__parameters:
@@ -274,7 +276,7 @@ map_server:
 map_saver:
   ros__parameters:
     use_sim_time: true
-    save_map_timeout: 5000
+    save_map_timeout: 5000.0
     free_thresh_default: 0.25
     occupied_thresh_default: 0.65
     map_subscribe_transient_local: true

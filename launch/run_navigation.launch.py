@@ -59,12 +59,6 @@ def generate_launch_description():
             ),
             description = 'Navigation2 parameter file path (Full path)'
         ),
-        DeclareLaunchArgument('default_bt_xml_filename',
-            default_value = os.path.join(
-                get_package_share_directory('nav2_bt_navigator'), 'behavior_trees', 'navigate_w_replanning_and_recovery.xml'
-            ),
-            description = 'Navigation2 behavior tree parameter file path (Full path)'
-        ),
         DeclareLaunchArgument('map',
             default_value = os.path.join(
                 sim_pkg_share_dir, 'maps', 'simulator_map.yaml'
@@ -76,16 +70,17 @@ def generate_launch_description():
             description = 'Enable sync slam by slam_toolbox (true/false)'
         ),
         IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(
-                os.path.join(nav2_bringup_pkg_share_dir, 'launch', 'navigation_launch.py')
-            ),
+            AnyLaunchDescriptionSource(os.path.join(
+                nav2_bringup_pkg_share_dir,
+                'launch',
+                'navigation_launch.py'
+            )),
             launch_arguments = {
                 'namespace': namespace,
                 'use_sim_time': use_sim_time,
                 'autostart': autostart,
                 'params_file': params_file,
                 'use_lifecycle_mgr': 'true',
-                'default_bt_xml_filename': LaunchConfiguration('default_bt_xml_filename'),
                 'map_subscribe_transient_local': 'true'
             }.items()
         ),

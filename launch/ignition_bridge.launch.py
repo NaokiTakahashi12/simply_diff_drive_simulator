@@ -38,7 +38,7 @@ def generate_launch_description():
         ),
         GroupAction([
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'clock_bridge',
                 namespace = namespace,
@@ -51,7 +51,7 @@ def generate_launch_description():
                 condition = IfCondition(use_sim_time)
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'control_bridge',
                 namespace = namespace,
@@ -65,11 +65,11 @@ def generate_launch_description():
                     + ']ignition.msgs.Twist'
                 ],
                 remappings = [
-                    (ign_model_prefix + '/cmd_vel', '/cmd_vel')
+                    (ign_model_prefix + '/cmd_vel', '/cmd_vel_nav')
                 ]
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'odometry_bridge',
                 namespace = namespace,
@@ -87,7 +87,7 @@ def generate_launch_description():
                 ]
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'joint_bridge',
                 namespace = namespace,
@@ -105,7 +105,7 @@ def generate_launch_description():
                 ]
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'imu_bridge',
                 namespace = namespace,
@@ -123,7 +123,7 @@ def generate_launch_description():
                 ]
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'lidar_bridge',
                 namespace = namespace,
@@ -141,7 +141,7 @@ def generate_launch_description():
                 ]
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'lidar_scan_bridge',
                 namespace = namespace,
@@ -159,7 +159,7 @@ def generate_launch_description():
                 ]
             ),
             Node(
-                package = 'ros_ign_bridge',
+                package = 'ros_gz_bridge',
                 executable = 'parameter_bridge',
                 name = 'depth_bridge',
                 namespace = namespace,
@@ -177,7 +177,7 @@ def generate_launch_description():
                 ]
             ),
             Node(
-                package = 'ros_ign_image',
+                package = 'ros_gz_image',
                 executable = 'image_bridge',
                 namespace = namespace,
                 output = 'screen',
@@ -200,9 +200,12 @@ def generate_launch_description():
                 executable = 'static_transform_publisher',
                 name = 'imu_stf',
                 namespace = namespace,
+                parameters = [
+                    {'use_sim_time': use_sim_time},
+                ],
                 arguments = [
-                    '0', '0', '0', '0', '0', '0', '1',
-                    imu_frame,
+                    '--frame-id', imu_frame,
+                    '--child-frame-id',
                     robot_name + '/'
                     + base_link_frame + '/'
                     + imu_frame
@@ -213,6 +216,9 @@ def generate_launch_description():
                 executable = 'static_transform_publisher',
                 name = 'lidar_stf',
                 namespace = namespace,
+                parameters = [
+                    {'use_sim_time': use_sim_time},
+                ],
                 arguments = [
                     '0', '0', '0', '0', '0', '0', '1',
                     lidar_frame,
@@ -226,6 +232,9 @@ def generate_launch_description():
                 executable = 'static_transform_publisher',
                 name = 'front_camera_stf',
                 namespace = namespace,
+                parameters = [
+                    {'use_sim_time': use_sim_time},
+                ],
                 arguments = [
                     '0', '0', '0', '0', '0', '0', '1',
                     front_rgbd_frame,
@@ -239,6 +248,9 @@ def generate_launch_description():
                 executable = 'static_transform_publisher',
                 name = 'back_camera_stf',
                 namespace = namespace,
+                parameters = [
+                    {'use_sim_time': use_sim_time},
+                ],
                 arguments = [
                     '0', '0', '0', '0', '0', '0', '1',
                     back_rgb_frame,
@@ -252,6 +264,9 @@ def generate_launch_description():
                 executable = 'static_transform_publisher',
                 name = 'third_camera_stf',
                 namespace = namespace,
+                parameters = [
+                    {'use_sim_time': use_sim_time},
+                ],
                 arguments = [
                     '0', '0', '0', '0', '0', '0', '1',
                     third_rgb_frame,
@@ -265,6 +280,9 @@ def generate_launch_description():
                 executable = 'static_transform_publisher',
                 name = 'base_to_base',
                 namespace = namespace,
+                parameters = [
+                    {'use_sim_time': use_sim_time},
+                ],
                 arguments = [
                     '0', '0', '0', '0', '0', '0', '1',
                     'diff_bot/base_link',
