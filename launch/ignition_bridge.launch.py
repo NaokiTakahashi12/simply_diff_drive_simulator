@@ -204,7 +204,8 @@ def generate_launch_description():
                     {'use_sim_time': use_sim_time},
                 ],
                 arguments = [
-                    '--frame-id', imu_frame,
+                    '--frame-id',
+                    imu_frame,
                     '--child-frame-id',
                     robot_name + '/'
                     + base_link_frame + '/'
@@ -220,8 +221,9 @@ def generate_launch_description():
                     {'use_sim_time': use_sim_time},
                 ],
                 arguments = [
-                    '0', '0', '0', '0', '0', '0', '1',
+                    '--frame-id',
                     lidar_frame,
+                    '--child-frame-id',
                     robot_name + '/'
                     + base_link_frame + '/'
                     + lidar_frame
@@ -236,8 +238,9 @@ def generate_launch_description():
                     {'use_sim_time': use_sim_time},
                 ],
                 arguments = [
-                    '0', '0', '0', '0', '0', '0', '1',
+                    '--frame-id',
                     front_rgbd_frame,
+                    '--child-frame-id',
                     robot_name + '/'
                     + base_link_frame + '/'
                     + front_rgbd_frame
@@ -252,8 +255,9 @@ def generate_launch_description():
                     {'use_sim_time': use_sim_time},
                 ],
                 arguments = [
-                    '0', '0', '0', '0', '0', '0', '1',
+                    '--frame-id',
                     back_rgb_frame,
+                    '--child-frame-id',
                     robot_name + '/'
                     + base_link_frame + '/'
                     + back_rgb_frame
@@ -268,8 +272,9 @@ def generate_launch_description():
                     {'use_sim_time': use_sim_time},
                 ],
                 arguments = [
-                    '0', '0', '0', '0', '0', '0', '1',
+                    '--frame-id',
                     third_rgb_frame,
+                    '--child-frame-id',
                     robot_name + '/'
                     + base_link_frame + '/'
                     + third_rgb_frame
@@ -284,8 +289,9 @@ def generate_launch_description():
                     {'use_sim_time': use_sim_time},
                 ],
                 arguments = [
-                    '0', '0', '0', '0', '0', '0', '1',
+                    '--frame-id',
                     'diff_bot/base_link',
+                    '--child-frame-id',
                     'base_link',
                 ]
             )
